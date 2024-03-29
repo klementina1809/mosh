@@ -5,13 +5,7 @@ import Input from "./common/input";
 function LoginForm() {
 	const [value, setValue] = useState({ username: "", password: "" });
 	const [errors, setErrors] = useState({});
-
-	const handleChange = ({ currentTarget: input }) => {
-		let newValue = { ...value };
-		newValue[input.name] = input.value;
-		setValue(newValue);
-	};
-
+	
 	const validate = () => {
 		const errors = {};
 		if (value.username.trim() === "") {
@@ -22,12 +16,36 @@ function LoginForm() {
 		}
 		return Object.keys(errors).length === 0 ? null : errors;
 	};
+	const validateProperty = ({ name, value }) => {
+		if (name === "username") {
+			if (value.trim() === "") return "Username is required";
+		}
+		if (name === "password") {
+			if (value.trim() === "") return "Password is required";
+		}
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const newError = validate();
 		setErrors(newError || {});
 	};
+
+	const handleChange = ({ currentTarget: input }) => {
+		const errors2 = { ...errors };
+
+		const errorMessage = validateProperty(input);
+		if (errorMessage) errors2[input.name] = errorMessage;
+		else delete errors[input.name];
+
+		let newValue = { ...value };
+		newValue[input.name] = input.value;
+		setValue(newValue);
+		
+		setErrors(errors2);
+	};
+
+
 	return (
 		<div>
 			<form onSubmit={(e) => handleSubmit(e)}>

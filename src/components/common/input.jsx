@@ -7,7 +7,6 @@ function Input({ name, label, value, onChange, error }) {
 				{label}
 			</label>
 			<input
-				autoFocus
 				value={value}
 				onChange={onChange}
 				id={name}
