@@ -5,12 +5,12 @@ import Joi from "joi-browser";
 function LoginForm() {
 	const [value, setValue] = useState({ username: "", password: "" });
 	const [errors, setErrors] = useState({});
-	
+
 	const schema = {
 		username: Joi.string().required().label("Username"),
 		password: Joi.string().required().label("Password"),
 	};
-	
+
 	const validateProperty = ({ name, value }) => {
 		const obj = { [name]: value };
 		const newSchema = { [name]: schema[name] };
@@ -69,7 +69,11 @@ function LoginForm() {
 					onChange={handleChange}
 					error={errors.password}
 				/>
-				<button type="submit" className="btn btn-primary">
+				<button
+					disabled={validate()}
+					type="submit"
+					className="btn btn-primary"
+				>
 					Login
 				</button>
 			</form>
