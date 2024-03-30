@@ -1,12 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import Input from "./common/input";
+import Joi from "joi-browser";
 
 function LoginForm() {
 	const [value, setValue] = useState({ username: "", password: "" });
 	const [errors, setErrors] = useState({});
-	
+
+	const schema = {
+		username: Joi.string().required(),
+		password: Joi.string().required(),
+	};
+
 	const validate = () => {
+		const result = Joi.validate(value, schema, { abortEarly: false });
+		console.log("result", result);
+
 		const errors = {};
 		if (value.username.trim() === "") {
 			errors.username = "Username is required.";
@@ -41,10 +50,9 @@ function LoginForm() {
 		let newValue = { ...value };
 		newValue[input.name] = input.value;
 		setValue(newValue);
-		
+
 		setErrors(errors2);
 	};
-
 
 	return (
 		<div>
