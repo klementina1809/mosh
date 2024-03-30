@@ -5,21 +5,25 @@ import Joi from "joi-browser";
 function LoginForm() {
 	const [value, setValue] = useState({ username: "", password: "" });
 	const [errors, setErrors] = useState({});
-
+	
 	const schema = {
 		username: Joi.string().required().label("Username"),
 		password: Joi.string().required().label("Password"),
 	};
-
+	
 	const validateProperty = ({ name, value }) => {
-		if (name === "username") {
-			if (value.trim() === "") return "Username is required";
-		}
-		if (name === "password") {
-			if (value.trim() === "") return "Password is required";
-		}
-	};
+		const obj = { [name]: value };
+		const newSchema = { [name]: schema[name] };
+		const { error } = Joi.validate(obj, newSchema);
+		return error ? error.details[0].message : null;
 
+		// if (name === "username") {
+		// 	if (value.trim() === "") return "Username is required";
+		// }
+		// if (name === "password") {
+		// 	if (value.trim() === "") return "Password is required";
+		// }
+	};
 	const handleChange = ({ currentTarget: input }) => {
 		let newValue = { ...value };
 		newValue[input.name] = input.value;
