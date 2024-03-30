@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Input from "./common/input";
 import Joi from "joi-browser";
 
@@ -8,23 +7,10 @@ function LoginForm() {
 	const [errors, setErrors] = useState({});
 
 	const schema = {
-		username: Joi.string().required(),
-		password: Joi.string().required(),
+		username: Joi.string().required().label("Username"),
+		password: Joi.string().required().label("Password"),
 	};
 
-	const validate = () => {
-		const result = Joi.validate(value, schema, { abortEarly: false });
-		console.log("result", result);
-
-		const errors = {};
-		if (value.username.trim() === "") {
-			errors.username = "Username is required.";
-		}
-		if (value.password.trim() === "") {
-			errors.password = "Password is required.";
-		}
-		return Object.keys(errors).length === 0 ? null : errors;
-	};
 	const validateProperty = ({ name, value }) => {
 		if (name === "username") {
 			if (value.trim() === "") return "Username is required";
@@ -34,24 +20,32 @@ function LoginForm() {
 		}
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		const newError = validate();
-		setErrors(newError || {});
-	};
-
 	const handleChange = ({ currentTarget: input }) => {
-		const errors2 = { ...errors };
-
-		const errorMessage = validateProperty(input);
-		if (errorMessage) errors2[input.name] = errorMessage;
-		else delete errors[input.name];
-
 		let newValue = { ...value };
 		newValue[input.name] = input.value;
 		setValue(newValue);
 
-		setErrors(errors2);
+		const errorMessage = validateProperty(input);
+		const newErrors = { ...errors };
+
+		if (errorMessage) newErrors[input.name] = errorMessage;
+		else delete newErrors[input.name];
+		setErrors(newErrors);
+	};
+
+	const validate = () => {
+		const { error } = Joi.validate(value, schema, { abortEarly: false });
+		if (!error) return null;
+
+		const errors = {};
+		for (let item of error.details) errors[item.path[0]] = item.message; // превращаем массив в обьект
+		return errors;
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const newError = validate();
+		setErrors(newError || {});
 	};
 
 	return (
