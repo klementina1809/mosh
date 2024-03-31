@@ -3,6 +3,8 @@ import React from "react";
 import _ from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link} from "react-router-dom";
+import NewMovie from "./newMovie";
 
 function Movies() {
 	const [sortColumn, setsortColumn] = useState({
@@ -53,6 +55,7 @@ function Movies() {
 	return (
 		<div>
 			<h2 className="m-4">Movies Table</h2>
+			<Link to="/new-movie" className="link btn btn-primary mb-4">New Movie</Link>
 			<table className="table table-striped table-bordered">
 				<thead className="thead-dark">
 					<tr>

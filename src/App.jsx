@@ -14,6 +14,7 @@ import Rentals from "./components/Rentals";
 import NotFound from "./components/NotFound";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import NewMovie from "./components/newMovie";
 
 import "./App.css";
 
@@ -54,6 +55,10 @@ function App() {
 				{
 					path: "/register",
 					element: <RegisterForm />,
+				},
+				{
+					path: "/new-movie",
+					element: <NewMovie />,
 				},
 				{
 					path: "/",
