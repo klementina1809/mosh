@@ -3,12 +3,13 @@ import Input from "./common/input";
 import Joi from "joi-browser";
 import useValidate from "./useValidate";
 
-function LoginForm() {
-	// const [data, setData] = useState({ username: "", password: "" });
+function RegisterForm() {
+	// const [data, setData] = useState({ username: "", password: "", name: "" });
 	// const [errors, setErrors] = useState({});
 	const schema = {
-		username: Joi.string().required().label("Username"),
-		password: Joi.string().required().label("Password"),
+		username: Joi.string().email().required().label("Username"),
+		password: Joi.string().min(5).required().label("Password"),
+		name: Joi.string().required().label("Name"),
 	};
 	const doSubmit = () => {
 		//call server
@@ -35,16 +36,23 @@ function LoginForm() {
 					onChange={handleChange}
 					error={errors.password}
 				/>
+				<Input
+					name={"name"}
+					label={"Name"}
+					data={data.name}
+					onChange={handleChange}
+					error={errors.name}
+				/>
 				<button
 					disabled={validate()}
 					type="submit"
 					className="btn btn-primary"
 				>
-					Login
+					Register
 				</button>
 			</form>
 		</div>
 	);
 }
 
-export default LoginForm;
+export default RegisterForm;

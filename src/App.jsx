@@ -13,6 +13,7 @@ import Customers from "./components/Customers";
 import Rentals from "./components/Rentals";
 import NotFound from "./components/NotFound";
 import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
 
 import "./App.css";
 
@@ -49,6 +50,10 @@ function App() {
 				{
 					path: "/login",
 					element: <LoginForm />,
+				},
+				{
+					path: "/register",
+					element: <RegisterForm />,
 				},
 				{
 					path: "/",
