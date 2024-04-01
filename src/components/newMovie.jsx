@@ -5,9 +5,11 @@ import Select from "./common/select";
 import Joi from "joi-browser";
 import useValidate from "./useValidate";
 import { useNavigate } from "react-router-dom";
+import { set } from "lodash";
 
 function NewMovie() {
 	const [storedMovies, setStoredMovies] = useLocalStorage("movies", []);
+	const [isSumbitted, setIsSubmitted] = useState(false);
 
 	const schema = {
 		title: Joi.string().required().label("Title"),
@@ -15,19 +17,20 @@ function NewMovie() {
 		rate: Joi.number().required().min(0).max(10).label("Rate"),
 	};
 	const navigate = useNavigate();
-  
+
 	const doSubmit = () => {
 		// Вызов сервера
 		let newMovie = { ...data, rating: data["rate"] };
 		delete newMovie.rate;
-    const existingMovies = storedMovies ? [...storedMovies] : [];
-    existingMovies.push(newMovie);
+		const existingMovies = storedMovies ? [...storedMovies] : [];
+		existingMovies.push(newMovie);
 		setStoredMovies(existingMovies);
+		setIsSubmitted(true);
 	};
 
 	useEffect(() => {
-		if (storedMovies) {
-			 navigate("/movies", { replace: true });
+		if (isSumbitted) {
+			navigate("/movies", { replace: true });
 		}
 	}, [storedMovies]);
 
@@ -35,14 +38,7 @@ function NewMovie() {
 		useValidate(schema);
 
 	// Список доступных жанров
-	const genres = [
-		"Action",
-		"Comedy",
-		"Drama",
-		"Horror",
-		"Sci-Fi",
-		"Thriller",
-	];
+	const genres = ["Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Thriller"];
 
 	return (
 		<div>
@@ -70,11 +66,7 @@ function NewMovie() {
 					onChange={handleChange}
 					error={errors.rate}
 				/>
-				<button
-					disabled={validate()}
-					type="submit"
-					className="btn btn-primary"
-				>
+				<button disabled={validate()} type="submit" className="btn btn-primary">
 					Save
 				</button>
 			</form>
