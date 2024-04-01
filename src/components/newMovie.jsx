@@ -20,13 +20,16 @@ function NewMovie() {
 		// Вызов сервера
 		let newMovie = { ...data, rating: data["rate"] };
 		delete newMovie.rate;
-		// setMovies(prev => [...prev, newMovie])
     const existingMovies = storedMovies ? [...storedMovies] : [];
     existingMovies.push(newMovie);
-    setStoredMovies(existingMovies);
-
-		navigate("/movies", { replace: true });
+		setStoredMovies(existingMovies);
 	};
+
+	useEffect(() => {
+		if (storedMovies) {
+			 navigate("/movies", { replace: true });
+		}
+	}, [storedMovies]);
 
 	const { data, errors, handleChange, handleSubmit, validate } =
 		useValidate(schema);
