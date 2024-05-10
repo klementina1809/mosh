@@ -38,7 +38,14 @@ function NewMovie() {
 		useValidate(schema);
 
 	// Список доступных жанров
-	const genres = ["Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Thriller"];
+	const genres = [
+		"Action",
+		"Comedy",
+		"Drama",
+		"Horror",
+		"Sci-Fi",
+		"Thriller",
+	];
 
 	return (
 		<div>
@@ -66,7 +73,11 @@ function NewMovie() {
 					onChange={handleChange}
 					error={errors.rate}
 				/>
-				<button disabled={validate()} type="submit" className="btn btn-primary">
+				<button
+					disabled={validate()}
+					type="submit"
+					className="btn btn-primary"
+				>
 					Save
 				</button>
 			</form>

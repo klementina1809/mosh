@@ -27,8 +27,8 @@ function useValidate(schema) {
 		setErrors(newError || {});
 
 		if (!newError) {
-      doSubmit();
-    }
+			doSubmit();
+		}
 	};
 
 	const handleChange = ({ currentTarget: input }) => {

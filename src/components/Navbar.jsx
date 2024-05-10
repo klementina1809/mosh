@@ -1,9 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-
 function Navbar() {
-
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary mb-5">
 			<div className="container-fluid">

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Input({ name, label, value, onChange, error, type='text' }) {
+function Input({ name, label, value, onChange, error, type = "text" }) {
 	return (
 		<div className="mb-3">
 			<label htmlFor={name} className="form-label">

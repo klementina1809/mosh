@@ -31,6 +31,7 @@ function App() {
 	const router = createBrowserRouter([
 		{
 			element: <BasicLayout />,
+			basename: "/mosh",
 			children: [
 				{
 					path: "/movies",

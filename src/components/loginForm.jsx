@@ -4,8 +4,6 @@ import Joi from "joi-browser";
 import useValidate from "./useValidate";
 
 function LoginForm() {
-	// const [data, setData] = useState({ username: "", password: "" });
-	// const [errors, setErrors] = useState({});
 	const schema = {
 		username: Joi.string().required().label("Username"),
 		password: Joi.string().required().label("Password"),
