@@ -27,10 +27,9 @@ function Movies() {
 		{ id: 8, title: "Interstellar", genre: "Sci-Fi", rating: 8.6 },
 	]);
 	const [search, setSearch] = useState("");
-	const [filtered, setFiltered] = useState(movies); // Изначально отображаем все фильмы
+	const [filtered, setFiltered] = useState(movies);
 
 	useEffect(() => {
-		// При изменении списка фильмов также обновляем отфильтрованный список
 		setFiltered(movies);
 	}, [movies]);
 
@@ -57,7 +56,6 @@ function Movies() {
 
 	const handleDelete = (id) => {
 		setMovies(movies.filter((movie) => movie.id !== id));
-		// Если фильм, который удаляем, был лайкнут, удаляем его из списка лайкнутых
 		if (likedMovies.includes(id)) {
 			setLikedMovies(likedMovies.filter((item) => item !== id));
 		}
@@ -71,7 +69,7 @@ function Movies() {
 			);
 			setFiltered(newFiltered);
 		} else {
-			setFiltered(movies); // Если строка поиска пустая, отображаем все фильмы
+			setFiltered(movies);
 		}
 	};
 
